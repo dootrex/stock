@@ -12,7 +12,7 @@ const Purchase = ({ stockName, price, ticker, postStock, balance }) => {
   const [confirm, setConfirm] = useState(false);
 
   useEffect(() => {
-    if (balance != 1 && balance > orderTotal) {
+    if (balance !== 1 && balance > orderTotal) {
       setAllow(true);
       setError("");
     } else {

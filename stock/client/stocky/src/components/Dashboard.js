@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import "./Dashboard.css";
 
+import Article from "./Article";
 import Header from "./Header";
 import axios from "axios";
 import Search from "./Search";
@@ -12,6 +13,9 @@ import StockDetails from "./StockDetails";
 import Spinner from "react-bootstrap/Spinner";
 
 const Dashboard = (props) => {
+  const [headline, setHeadline] = useState("");
+  const [url, setUrl] = useState("");
+  const [image, setImg] = useState("");
   const [loading, setLoading] = useState(true);
   const [ticker, setTicker] = useState("AAPL");
   const [stockName, setStockName] = useState("Apple Inc");
@@ -52,29 +56,38 @@ const Dashboard = (props) => {
       );
 
       let stuff = [];
-      for (let key in res.data["Time Series (15min)"]) {
-        stuff.push({
-          x: key,
-          y: res.data["Time Series (15min)"][key]["4. close"],
-        });
+      if (res) {
+        for (let key in res.data["Time Series (15min)"]) {
+          stuff.push({
+            x: key,
+            y: res.data["Time Series (15min)"][key]["4. close"],
+          });
+        }
       }
       setChartData(stuff);
 
       //intraday data fetch with another api key to help with the request limit
       let response = await axios.get(
-        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${ticker}&apikey=0TLHVL9EOZXQ9BG0`
+        `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_6a8c8cf8c08245cf96f1aa8d55a157ea`
       );
-      //this is to get the latest date
-      let dates = Object.keys(response.data["Time Series (Daily)"]);
+
       setDayReport({
         ...dayReport,
-        open: response.data["Time Series (Daily)"][dates[0]]["1. open"],
-        high: response.data["Time Series (Daily)"][dates[0]]["2. high"],
-        low: response.data["Time Series (Daily)"][dates[0]]["3. low"],
-        close: response.data["Time Series (Daily)"][dates[0]]["4. close"],
-        volume: response.data["Time Series (Daily)"][dates[0]]["5. volume"],
+        open: response.data.open,
+        high: response.data.high,
+        low: response.data.low,
+        close: response.data.close,
+        volume: response.data.volume,
       });
+
+      let resy = await axios.get(
+        `https://cloud.iexapis.com/stable/stock/${ticker}/news/last/1?token=pk_6a8c8cf8c08245cf96f1aa8d55a157ea`
+      );
+      setImg(resy.data[0].image);
+      setUrl(resy.data[0].url);
+      setHeadline(resy.data[0].headline);
     };
+
     fetchData();
     const timer = setTimeout(() => {
       setLoading(false);
@@ -82,18 +95,26 @@ const Dashboard = (props) => {
     return () => clearTimeout(timer);
   }, [ticker]);
   return (
-    <div className="container">
+    <>
       <Header />
-      <Search setTicker={handleSearchSubmit} />
-      {fetchedData()}
-      <Purchase
-        price={dayReport.close}
-        stockName={stockName}
-        ticker={ticker}
-        balance={props.user ? props.user.balance : 1}
-      />
-      <StockDetails stockName={stockName} report={dayReport} />
-    </div>
+      <div className="container">
+        <Search setTicker={handleSearchSubmit} />
+        {fetchedData()}
+        <Purchase
+          price={dayReport.close}
+          stockName={stockName}
+          ticker={ticker}
+          balance={props.user ? props.user.balance : 1}
+        />
+        <StockDetails stockName={stockName} report={dayReport} />
+        <Article
+          url={url}
+          img={image}
+          headline={headline}
+          stockName={stockName}
+        />
+      </div>
+    </>
   );
 };
 

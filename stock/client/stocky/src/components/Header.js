@@ -37,21 +37,23 @@ class Header extends Component {
           variant="dark"
           style={{ backgroundColor: "black" }}
         >
-          <Navbar.Brand as={Link} to="/simulator">
-            Stocky
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="mr-auto">
-              <Nav.Link as={Link} to="/about">
-                About
-              </Nav.Link>
-              <Nav.Link as={Link} to="/portfolio">
-                My Portfolio
-              </Nav.Link>
-            </Nav>
-            {this.login()}
-          </Navbar.Collapse>
+          <div className="container">
+            <Navbar.Brand as={Link} to="/simulator">
+              Stocky
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link as={Link} to="/about">
+                  About
+                </Nav.Link>
+                <Nav.Link as={Link} to="/portfolio">
+                  My Portfolio
+                </Nav.Link>
+              </Nav>
+              {this.login()}
+            </Navbar.Collapse>
+          </div>
         </Navbar>
       </>
     );

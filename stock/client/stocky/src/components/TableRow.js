@@ -16,11 +16,11 @@ const TableRow = ({
 
   const handleCheck = async () => {
     setFetching(true);
-    let res = await axios.get(
-      `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${ticker}&apikey=DH1J1NJL9H9HFP8D`
+    let response = await axios.get(
+      `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_6a8c8cf8c08245cf96f1aa8d55a157ea`
     );
-    let dates = Object.keys(res.data["Time Series (Daily)"]);
-    setCurrent(res.data["Time Series (Daily)"][dates[0]]["4. close"]);
+
+    setCurrent(response.data.close);
     const timer = setTimeout(() => {
       setFetching(false);
     }, 3000);
@@ -38,7 +38,9 @@ const TableRow = ({
       return <button onClick={() => handleCheck()}>Check Current Price</button>;
     } else {
       return (
-        <button onClick={() => handleSell(ticker, balance - amount)}>
+        <button
+          onClick={() => handleSell(ticker, balance + current * quantity)}
+        >
           Sell at {current}
         </button>
       );
