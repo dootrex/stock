@@ -1,6 +1,6 @@
 import React from "react";
 import "./Landing.css";
-import About from "./About";
+import Info from "./Info";
 import ParticlesBg from "particles-bg";
 import { Link as SiteLink } from "react-router-dom";
 import { Link } from "react-scroll";
@@ -33,7 +33,7 @@ export default () => {
           </div>
         </div>
       </div>
-      <About />
+      <Info />
     </>
   );
 };

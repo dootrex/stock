@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import searchBank from "../utils/list";
+import "./Search.css";
 
 const Search = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,6 +31,7 @@ const Search = (props) => {
           value={searchTerm}
           onChange={handleChange}
           list="tickers"
+          className="searchTerm"
         />
         <datalist id="tickers">
           {searchResults.map((item) => (
@@ -38,7 +40,7 @@ const Search = (props) => {
             </option>
           ))}
         </datalist>
-        <button>Search</button>
+        <button className="searchButton">Search</button>
       </form>
     </>
   );

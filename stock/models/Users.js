@@ -5,6 +5,14 @@ const userSchema = new Schema({
   userName: String,
   balance: { type: Number, default: 10000 },
   googleId: String,
+  stocks: [
+    {
+      ticker: String,
+      quantity: Number,
+      amount: Number,
+      stockName: String,
+    },
+  ],
 });
 
 mongoose.model("user", userSchema);

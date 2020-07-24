@@ -1,0 +1,8 @@
+.spinner {
+  height: 500px;
+  width: 500px;
+  background-color: beige;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
