@@ -1,8 +1,6 @@
-//prod.js- production keys here
 module.exports = {
-  // googleClientID: process.env.GOOGLE_CLIENT_ID,
-  // googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  // mongoURI: process.env.MONGO_URI,
-  // cookieKey: process.env.COOKIE_KEY,
-  // iexAPIKey: process.env.IEX_API_KEY,
+  googleClientId: process.env.GOOGLE_CLIENT_ID,
+  googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  mongoURI: process.env.MONGO_URI,
+  cookieKey: process.env.COOKIE_KEY,
 };

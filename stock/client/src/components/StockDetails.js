@@ -4,7 +4,7 @@ const Information = (props) => {
   return (
     <>
       <ul className="list-group">
-        <li className="list-group-item d-flex text-center lead">
+        <li className="list-group-item d-flex display-4 text-center lead">
           {props.stockName}
         </li>
         <li className="list-group-item d-flex justify-content-between align-items-center">

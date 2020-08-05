@@ -30,7 +30,7 @@ function Chart({ data, ticker }) {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "Time",
+          legend: `${new Date().toISOString().split("T")[0]}`,
           legendOffset: 36,
           legendPosition: "middle",
         }}
@@ -39,7 +39,7 @@ function Chart({ data, ticker }) {
           tickSize: 5,
           tickPadding: 5,
           tickRotation: 0,
-          legend: "Price",
+          legend: "Price $",
           legendOffset: -40,
           legendPosition: "middle",
         }}

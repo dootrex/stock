@@ -4,8 +4,15 @@ import { connect } from "react-redux";
 import { Navbar, Nav } from "react-bootstrap";
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { logged: false };
+  }
   login() {
     if (this.props.user) {
+      if (!this.state.logged) {
+        this.setState({ logged: true });
+      }
       return (
         <Nav>
           <Nav.Link as={Link} to="/portfolio">
@@ -18,6 +25,9 @@ class Header extends Component {
         </Nav>
       );
     } else {
+      if (this.state.logged) {
+        this.setState({ logged: false });
+      }
       return (
         <Nav>
           <Nav.Link href="/auth/google" style={{ color: "blue" }}>
@@ -48,7 +58,7 @@ class Header extends Component {
                   About
                 </Nav.Link>
                 <Nav.Link as={Link} to="/portfolio">
-                  My Portfolio
+                  {this.state.logged ? "My Portfolio" : ""}
                 </Nav.Link>
               </Nav>
               {this.login()}

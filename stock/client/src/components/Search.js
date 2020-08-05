@@ -24,14 +24,14 @@ const Search = (props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="form-inline">
         <input
           type="text"
           placeholder="Search..."
           value={searchTerm}
           onChange={handleChange}
           list="tickers"
-          className="searchTerm"
+          className="form-control"
         />
         <datalist id="tickers">
           {searchResults.map((item) => (
@@ -40,7 +40,7 @@ const Search = (props) => {
             </option>
           ))}
         </datalist>
-        <button className="searchButton">Search</button>
+        <button className="btn btn-primary">Search</button>
       </form>
     </>
   );

@@ -7,8 +7,12 @@ const PurchaseConfirmation = ({ handleConfirm, handleCancel }) => {
     <>
       Are you sure you wanna buy?
       <div>
-        <button onClick={() => handleCancel()}>cancel</button>
-        <button onClick={() => handleConfirm()}>confirm</button>
+        <button className="btn btn-danger" onClick={() => handleCancel()}>
+          cancel
+        </button>
+        <button className="btn btn-success" onClick={() => handleConfirm()}>
+          confirm
+        </button>
       </div>
     </>
   );

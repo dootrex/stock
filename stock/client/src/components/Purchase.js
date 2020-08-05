@@ -1,33 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import * as actions from "../actions";
+import Alert from "react-bootstrap/Alert";
 import PurchaseConfirmation from "./PurchaseConfirmation";
 
-//next you have to handle balance check and error handling associated with balance and input
 const Purchase = ({ stockName, price, ticker, postStock, balance }) => {
   const [quantity, setQuantity] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
-  const [allow, setAllow] = useState(true);
   const [error, setError] = useState("");
   const [confirm, setConfirm] = useState(false);
 
-  useEffect(() => {
-    if (balance !== 1 && balance > orderTotal) {
-      setAllow(true);
-      setError("");
-    } else {
-      setAllow(false);
-      setError("Must Login to buy");
-    }
-  }, [quantity, balance]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
+    if (balance !== 1 && balance > orderTotal) {
+      setConfirm(true);
+    } else {
+      setError("Must Login and have balance higher than order total to buy.");
+      const timer = setTimeout(() => {
+        setError("");
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  };
   const handleChange = (e) => {
     setQuantity(e.target.value);
     setOrderTotal(e.target.value * price);
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setConfirm(true);
   };
   const handleCancel = () => {
     setConfirm(false);
@@ -40,12 +38,24 @@ const Purchase = ({ stockName, price, ticker, postStock, balance }) => {
     setQuantity(0);
     setOrderTotal(0);
   };
-
-  const buyButton = () => {
-    if (allow) {
-      return <button>Buy</button>;
+  const errorShow = () => {
+    if (error === "") {
+      return (
+        <div>
+          <form onSubmit={handleSubmit} className="form-inline">
+            <input
+              type="number"
+              value={quantity}
+              onChange={handleChange}
+              placeholder={`# of ${stockName}`}
+              className="form-control"
+            ></input>
+            <button className="btn btn-primary">Buy</button>
+          </form>
+        </div>
+      );
     } else {
-      return <button disabled>Buy</button>;
+      return <Alert variant="warning">{error}</Alert>;
     }
   };
   const inConfirmation = () => {
@@ -59,21 +69,7 @@ const Purchase = ({ stockName, price, ticker, postStock, balance }) => {
         </>
       );
     } else {
-      return (
-        <>
-          <div>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="number"
-                value={quantity}
-                onChange={handleChange}
-                placeholder={`# of ${stockName}`}
-              ></input>
-              {buyButton()}
-            </form>
-          </div>
-        </>
-      );
+      return <>{errorShow()}</>;
     }
   };
   return <>{inConfirmation()}</>;

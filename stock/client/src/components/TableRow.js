@@ -12,7 +12,10 @@ const TableRow = ({
 }) => {
   const [current, setCurrent] = useState(0);
   const [fetching, setFetching] = useState(false);
-  const [confirm, setConfirm] = useState(false);
+
+  const handleCancel = () => {
+    setCurrent(0);
+  };
 
   const handleCheck = async () => {
     setFetching(true);
@@ -35,14 +38,27 @@ const TableRow = ({
         </Spinner>
       );
     } else if (current === 0) {
-      return <button onClick={() => handleCheck()}>Check Current Price</button>;
+      return (
+        <button className="btn btn-primary" onClick={() => handleCheck()}>
+          Check Current Price
+        </button>
+      );
     } else {
       return (
-        <button
-          onClick={() => handleSell(ticker, balance + current * quantity)}
-        >
-          Sell at {current}
-        </button>
+        <>
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              handleSell(ticker, balance + current * quantity);
+              setCurrent(0);
+            }}
+          >
+            Sell at {current}
+          </button>
+          <button className="btn btn-danger" onClick={() => handleCancel()}>
+            Cancel
+          </button>
+        </>
       );
     }
   };

@@ -15,7 +15,6 @@ export const postStock = (
   balance,
   stockName
 ) => async (dispatch) => {
-  console.log(quantity);
   const user = await axios.post("/api/stock", {
     ticker,
     quantity,
