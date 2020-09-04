@@ -19,7 +19,7 @@ const Portfolio = ({ user, removeStock, history }) => {
     }, 0);
     portfolioBalance = parseFloat(portfolioBalance).toFixed(2);
     return (
-      <>
+      <div style={{ backgroundColor: "lightcyan" }}>
         <Header />
         <div className="container" style={{ height: "100vh" }}>
           <ul className="list-group mt-2">
@@ -62,7 +62,7 @@ const Portfolio = ({ user, removeStock, history }) => {
             </tbody>
           </Table>
         </div>
-      </>
+      </div>
     );
   } else {
     history.push("/simulator");

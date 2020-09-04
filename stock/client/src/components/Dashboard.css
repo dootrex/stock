@@ -13,3 +13,9 @@
   display: flex;
   justify-content: space-between;
 }
+/* .mainContainer {
+  background-color: lightslategrey;
+} */
+.outside {
+  background-color: lightcyan;
+}

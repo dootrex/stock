@@ -8,9 +8,9 @@ export default ({ url, img, headline, stockName }) => {
       <Card.Body>
         <Card.Title>{stockName}</Card.Title>
         <Card.Text>{headline}</Card.Text>
-        <Button variant="primary" to={url}>
-          Go to the Article
-        </Button>
+        <a className="btn btn-primary" href={url}>
+          Go to Article
+        </a>
       </Card.Body>
     </Card>
   );

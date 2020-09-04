@@ -23,7 +23,7 @@ const TableRow = ({
       `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=pk_6a8c8cf8c08245cf96f1aa8d55a157ea`
     );
 
-    setCurrent(response.data.close);
+    setCurrent(response.data.close || response.data.iexClose);
     const timer = setTimeout(() => {
       setFetching(false);
     }, 3000);

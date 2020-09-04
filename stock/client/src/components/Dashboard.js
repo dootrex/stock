@@ -53,13 +53,20 @@ const Dashboard = (props) => {
       let response = await axios.get(
         `https://cloud.iexapis.com/stable/stock/${ticker}/quote?token=${process.env.REACT_APP_IEX_KEY}`
       );
+      const lowChecker = () => {
+        if (response.data.iexClose > response.data.previousClose) {
+          return response.data.previousClose;
+        } else {
+          return response.data.iexClose;
+        }
+      };
       setDayReport({
         ...dayReport,
-        open: response.data.open,
-        high: response.data.high,
-        low: response.data.low,
-        close: response.data.close,
-        volume: response.data.volume,
+        open: response.data.open || response.data.previousClose,
+        high: response.data.high || response.data.iexClose,
+        low: response.data.low || lowChecker(),
+        close: response.data.close || response.data.latestPrice,
+        volume: response.data.volume || response.data.previousVolume,
       });
 
       let resy = await axios.get(
@@ -94,10 +101,10 @@ const Dashboard = (props) => {
     }
   };
   return (
-    <div>
+    <div className="outside">
       <Header />
-      <div className="container">
-        <div className="searchStuff my-2">
+      <div className="container mainContainer py-2">
+        <div className="searchStuff mb-2">
           <div className="align-self-start">
             <Search setTicker={handleSearchSubmit} />
           </div>

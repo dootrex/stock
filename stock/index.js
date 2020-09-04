@@ -45,7 +45,7 @@ app.get("/api/logout", (req, res) => {
 
 app.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
+  passport.authenticate("google", { failureRedirect: "/simulator" }),
   (req, res) => {
     res.redirect("/simulator");
   }
